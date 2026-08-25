@@ -1,0 +1,49 @@
+:root {
+  /* --- Color tokens --- */
+  --color-bg: #FBF3F0;         /* warm blush cream, not a stark white */
+  --color-surface: #FFFFFF;    /* card / button surface */
+  --color-ink: #2B2320;        /* near-black warm text, not pure #000 */
+  --color-pink-soft: #F1D4D1;  /* muted dusty pink — primary accent */
+  --color-pink-deep: #D98E88;  /* deeper rose for emphasis text/hover */
+  --color-line: #E7DAD5;       /* hairline dividers */
+
+  /* --- Type tokens --- */
+  --font-display: 'Fraunces', serif;             /* headlines, emotional beats */
+  --font-accent: 'Instrument Serif', serif;       /* italic asides, quotes */
+  --font-label: 'Bricolage Grotesque', sans-serif; /* eyebrows, buttons, UI labels */
+  --font-body: 'Inter', sans-serif;                /* paragraph copy */
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: var(--font-label);
+  cursor: pointer;
+}
+
+/* Respect reduced-motion preferences across the whole site */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
