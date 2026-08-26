@@ -1,17 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import DoodleHeart from './DoodleHeart.jsx'
 
 // Drives the whole site as discrete full-screen chapters (like a slide deck)
 // instead of one long scroll. Swipe/click through with the arrows, or tap
-// the progress segments at top. `steps` is an array of { showChrome, render }.
+// the progress segments at top. `steps` is an array of
+// { showChrome, initiallyLocked, render }. A step with initiallyLocked:true
+// blocks forward navigation (both the floating arrow and any Continue
+// button the step renders) until it calls the `unlock` prop it's given.
 export default function StepperShell({ steps }) {
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState(1)
+  const [locked, setLocked] = useState(Boolean(steps[0]?.initiallyLocked))
+
+  useEffect(() => {
+    setLocked(Boolean(steps[index]?.initiallyLocked))
+  }, [index])
 
   const goTo = (next) => {
     if (next < 0 || next > steps.length - 1) return
+    if (next > index && locked) return
     setDirection(next > index ? 1 : -1)
     setIndex(next)
   }
@@ -55,7 +64,12 @@ export default function StepperShell({ steps }) {
             flexDirection: 'column',
           }}
         >
-          {current.render({ onNext: () => goTo(index + 1), onBack: () => goTo(index - 1) })}
+          {current.render({
+            onNext: () => goTo(index + 1),
+            onBack: () => goTo(index - 1),
+            locked,
+            unlock: () => setLocked(false),
+          })}
         </motion.div>
       </AnimatePresence>
 
@@ -63,6 +77,7 @@ export default function StepperShell({ steps }) {
         <button
           onClick={() => goTo(index + 1)}
           aria-label="Next"
+          disabled={locked}
           style={{
             position: 'fixed',
             right: '18px',
@@ -76,6 +91,8 @@ export default function StepperShell({ steps }) {
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 6px 18px rgba(43, 35, 32, 0.16)',
+            opacity: locked ? 0.35 : 1,
+            cursor: locked ? 'not-allowed' : 'pointer',
             zIndex: 20,
           }}
         >

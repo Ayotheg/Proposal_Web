@@ -4,13 +4,14 @@ import DoodleHeart from './DoodleHeart.jsx'
 import { thingsILove } from '../content.js'
 import ContinueButton from './ContinueButton.jsx'
 
-export default function ThingsILove({ onNext }) {
+export default function ThingsILove({ onNext, locked, unlock }) {
   const [tapped, setTapped] = useState(() => new Set())
 
   const toggle = (i) => {
     setTapped((prev) => {
       const next = new Set(prev)
       next.has(i) ? next.delete(i) : next.add(i)
+      if (next.size > 0) unlock?.()
       return next
     })
   }
@@ -46,7 +47,7 @@ export default function ThingsILove({ onNext }) {
             margin: '0 0 44px',
           }}
         >
-          tap the ones that make you smile
+          {locked ? 'tap at least one to continue' : 'tap the ones that make you smile'}
         </p>
       </div>
 
@@ -109,7 +110,7 @@ export default function ThingsILove({ onNext }) {
         })}
       </div>
 
-      <ContinueButton onClick={onNext} />
+      <ContinueButton onClick={onNext} disabled={locked} />
     </section>
   )
 }

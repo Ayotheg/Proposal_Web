@@ -1,29 +1,21 @@
-import { useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Play, Pause } from 'lucide-react'
 import { ourSong } from '../content.js'
 import ContinueButton from './ContinueButton.jsx'
+import { useAudio } from '../context/AudioContext.jsx'
 
-// Looks for the song at public/audio/forever-sweet.mp3 — drop the real file
-// there (any filename works, just update the src below) once you have it.
-// Until then the button is visible but silently does nothing, which is a
-// safe fallback rather than a broken build.
-const AUDIO_SRC = '/audio/forever-sweet.mp3'
+// Drop the real file at public/audio/forever-sweet.mp3 (see AudioContext.jsx
+// for the referenced path). Until it's there, the button is visible but
+// silently does nothing — safe fallback rather than a broken build.
+export default function Song({ onNext, locked, unlock }) {
+  const { playing, everPlayed, toggle } = useAudio()
 
-export default function Song({ onNext }) {
-  const audioRef = useRef(null)
-  const [playing, setPlaying] = useState(false)
-
-  const toggle = () => {
-    const audio = audioRef.current
-    if (!audio) return
-    if (playing) {
-      audio.pause()
-    } else {
-      audio.play().catch(() => {})
-    }
-    setPlaying(!playing)
-  }
+  // If she already pressed play earlier (e.g. came back to this screen),
+  // don't leave the chapter locked.
+  useEffect(() => {
+    if (everPlayed) unlock?.()
+  }, [everPlayed])
 
   return (
     <section
@@ -107,12 +99,22 @@ export default function Song({ onNext }) {
           opacity: 0.7,
         }}
       >
-        {playing ? 'now playing' : 'play our song'}
+        {locked ? 'press play to continue' : playing ? 'now playing' : 'paused — tap to resume'}
       </p>
 
-      <audio ref={audioRef} src={AUDIO_SRC} loop onEnded={() => setPlaying(false)} />
+      <p
+        style={{
+          marginTop: '4px',
+          fontFamily: 'var(--font-label)',
+          fontSize: '11px',
+          color: 'var(--color-pink-deep)',
+          opacity: 0.5,
+        }}
+      >
+        keeps playing in the background as you continue
+      </p>
 
-      <ContinueButton onClick={onNext} />
+      <ContinueButton onClick={onNext} disabled={locked} />
     </section>
   )
 }

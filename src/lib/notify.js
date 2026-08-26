@@ -1,22 +1,5 @@
 import emailjs from '@emailjs/browser'
 
-// EmailJS lets a fully static site send an email from the browser — no
-// backend/server needed. Free tier covers this easily (one-off use, not a
-// high-volume app).
-//
-// Setup (one-time, ~5 minutes):
-//   1. Create a free account at https://www.emailjs.com
-//   2. Add an Email Service (e.g. connect your Gmail) — note the Service ID
-//   3. Create an Email Template — it just needs two variables in the body:
-//        {{message}}   — what happened / her note
-//        {{sent_at}}   — timestamp
-//      Set the template's "To email" field to your friend's own inbox —
-//      that's what makes this "come back to him", not something in the code.
-//   4. Grab your Public Key from Account > General
-//   5. Fill in the three values below (or set them as environment
-//      variables VITE_EMAILJS_SERVICE_ID / VITE_EMAILJS_TEMPLATE_ID /
-//      VITE_EMAILJS_PUBLIC_KEY in a .env file, which is safer if this
-//      project ever ends up in a public repo)
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'

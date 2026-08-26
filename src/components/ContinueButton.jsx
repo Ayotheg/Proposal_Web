@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
 
-export default function ContinueButton({ onClick, children = 'Continue' }) {
+export default function ContinueButton({ onClick, children = 'Continue', disabled = false }) {
   return (
     <motion.button
-      onClick={onClick}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.96 }}
+      onClick={disabled ? undefined : onClick}
+      whileHover={disabled ? undefined : { y: -2 }}
+      whileTap={disabled ? undefined : { scale: 0.96 }}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3 }}
@@ -22,6 +22,8 @@ export default function ContinueButton({ onClick, children = 'Continue' }) {
         letterSpacing: '0.02em',
         boxShadow: '0 4px 16px rgba(217, 142, 136, 0.22)',
         alignSelf: 'center',
+        opacity: disabled ? 0.4 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
       {children}

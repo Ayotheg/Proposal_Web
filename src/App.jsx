@@ -1,4 +1,5 @@
 import StepperShell from './components/StepperShell.jsx'
+import { AudioProvider } from './context/AudioContext.jsx'
 import OpeningScreen from './components/OpeningScreen.jsx'
 import OurStory from './components/OurStory.jsx'
 import Gallery from './components/Gallery.jsx'
@@ -20,9 +21,17 @@ const steps = [
   { showChrome: false, render: ({ onNext }) => <OpeningScreen onNext={onNext} /> },
   { render: ({ onNext }) => <OurStory onNext={onNext} /> },
   { render: ({ onNext }) => <Gallery onNext={onNext} /> },
-  { render: ({ onNext }) => <ThingsILove onNext={onNext} /> },
+  {
+    initiallyLocked: true,
+    render: ({ onNext, locked, unlock }) => (
+      <ThingsILove onNext={onNext} locked={locked} unlock={unlock} />
+    ),
+  },
   { render: ({ onNext }) => <WhatYouMeanToMe onNext={onNext} /> },
-  { render: ({ onNext }) => <Song onNext={onNext} /> },
+  {
+    initiallyLocked: true,
+    render: ({ onNext, locked, unlock }) => <Song onNext={onNext} locked={locked} unlock={unlock} />,
+  },
   { render: ({ onNext }) => <Timeline onNext={onNext} /> },
   { render: ({ onNext }) => <OurFuture onNext={onNext} /> },
   { render: ({ onNext }) => <HiddenLetter onNext={onNext} /> },
@@ -32,5 +41,9 @@ const steps = [
 ]
 
 export default function App() {
-  return <StepperShell steps={steps} />
+  return (
+    <AudioProvider>
+      <StepperShell steps={steps} />
+    </AudioProvider>
+  )
 }

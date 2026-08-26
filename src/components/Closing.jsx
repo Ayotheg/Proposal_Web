@@ -3,7 +3,13 @@ import DoodleHeart from './DoodleHeart.jsx'
 import { closing } from '../content.js'
 
 export default function Closing() {
-  const today = new Date().toLocaleDateString(undefined, {
+  // Locked to the moment she actually caught the YESSSS button, stored in
+  // FinalProposal.jsx — not recalculated on every visit/reload, so it
+  // stays true to the real date even if the link is opened again later.
+  const stored = localStorage.getItem('proposalRespondedAt')
+  const respondedAt = stored ? new Date(stored) : new Date()
+
+  const today = respondedAt.toLocaleDateString(undefined, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

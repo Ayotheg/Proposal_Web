@@ -36,6 +36,7 @@ export default function FinalProposal({ onNext }) {
       return
     }
     setStage('caught')
+    localStorage.setItem('proposalRespondedAt', new Date().toISOString())
     sendResponse('She said YES! 🎉')
     setTimeout(onNext, 900)
   }

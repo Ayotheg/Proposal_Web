@@ -92,7 +92,7 @@ export const hiddenLetter = {
     "I wanted this letter to be just for you. A quiet moment before the next part.",
     "Thank you for being exactly who you are.",
   ],
-  signature: "always",
+  signature: "always,Muyiwa",
 }
 
 export const finalProposal = {
