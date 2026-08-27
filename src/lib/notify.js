@@ -18,9 +18,9 @@ import emailjs from '@emailjs/browser'
 //      VITE_EMAILJS_PUBLIC_KEY in a .env file, which is safer if this
 //      project ever ends up in a public repo)
 
-const SERVICE_ID = import.meta.env.EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
-const TEMPLATE_ID = import.meta.env.EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
-const PUBLIC_KEY = import.meta.env.EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
 
 const isConfigured = () =>
   ![SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY].some((v) => !v || v.startsWith('YOUR_'))
