@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 import memory1 from '../assets/images/MEMORIES.jpg'
 import memory2 from '../assets/images/MEMORIES-2.jpg'
-import memory7 from '../assets/images/MEMORIES-7.jpg'
-import memory5 from '../assets/images/MEMORIES-5.jpg'
+import memory3 from '../assets/images/MEMORIES-3.jpg'
+import memory4 from '../assets/images/MEMORIES-4.jpg'
 import { galleryCaptions } from '../content.js'
 import ContinueButton from './ContinueButton.jsx'
 
-const photos = [memory1, memory2, memory7, memory5]
+const photos = [memory1, memory2, memory3, memory4]
 
 export default function Gallery({ onNext }) {
   return (

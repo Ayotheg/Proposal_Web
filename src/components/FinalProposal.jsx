@@ -21,11 +21,15 @@ export default function FinalProposal({ onNext }) {
     const { width, height } = el.getBoundingClientRect()
     const btnW = 190
     const btnH = 60
-    const maxX = Math.max(width - btnW, 40)
-    const maxY = Math.max(height - btnH - 60, 40)
+    // Keep the dodge tight and mostly horizontal so it never pushes the
+    // button (or the page) below the visible screen on mobile — no one
+    // should ever need to scroll to catch it.
+    const maxX = Math.max(Math.min(width / 2 - btnW / 2 - 12, 120), 40)
+    const maxUp = Math.min(height * 0.12, 70)
+    const maxDown = Math.min(height * 0.08, 40)
     setPos({
-      x: Math.random() * maxX - maxX / 2,
-      y: Math.random() * maxY * 0.6,
+      x: Math.random() * maxX * 2 - maxX,
+      y: Math.random() * (maxUp + maxDown) - maxUp,
     })
   }
 
@@ -53,6 +57,7 @@ export default function FinalProposal({ onNext }) {
         justifyContent: 'center',
         textAlign: 'center',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <AnimatePresence mode="wait">
